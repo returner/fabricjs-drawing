@@ -16,17 +16,14 @@ module.exports = (env, options) => {
                   loader: 'ts-loader',
                 },
               ],
-          },
-          {
-            test: /\.html$/,
-            loader: "raw-loader"
-         }
+          }
       ]
     },
     devtool: 'source-map',
     devServer : {
       contentBase : path.resolve(__dirname, './'),
-      publicPath: path.resolve(__dirname, '/dist/')
+      publicPath: path.resolve(__dirname, '/dist/'),
+      hot : true,
     },
     resolve : {
       extensions: ['.ts', '.tsx', '.js']

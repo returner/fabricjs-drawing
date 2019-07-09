@@ -19,8 +19,6 @@
   "devDependencies": {
     "@types/webpack": "^4.4.34",
     "copy-webpack-plugin": "^5.0.3",
-    "css-loader": "^3.0.0",
-    "style-loader": "^0.23.1",
     "ts-loader": "^6.0.4",
     "typescript": "^3.5.2",
     "uglifyjs-webpack-plugin": "^2.1.3",
