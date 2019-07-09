@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = (env, options) => {
   const config = {
@@ -15,7 +16,11 @@ module.exports = (env, options) => {
                   loader: 'ts-loader',
                 },
               ],
-          }
+          },
+          {
+            test: /\.html$/,
+            loader: "raw-loader"
+         }
       ]
     },
     devtool: 'source-map',
@@ -34,13 +39,25 @@ module.exports = (env, options) => {
   if(options.mode === 'development') {
     config.output.path = path.resolve(__dirname, './dist');
   } else {
+    //production
     config.output.path = path.resolve(__dirname, './docs/dist');
-
     config.plugins = [
-      new CopyWebpackPlugin([
-        { from : './index.html', to : '../'}
-      ])
+      new CopyWebpackPlugin([{ from : './index.html', to : '../'}]),
     ];
+    config.optimization = {
+      minimizer : [
+        new UglifyJsPlugin({
+          cache: true,
+          parallel: true,
+          uglifyOptions: {
+            compress: true,
+            ecma: 5,
+            mangle: true
+          },
+          sourceMap: true
+        })
+      ]
+    }
   }
 
   return config;
