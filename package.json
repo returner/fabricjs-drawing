@@ -3,16 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack --mode development",
+    "deploy" : "webpack --mode production",
     "devserver": "webpack-dev-server --hot --inline --colors --port 8989 --open"
   },
   "author": "returner",
   "license": "MIT",
   "dependencies": {
-    "@types/bootstrap": "^4.3.1",
     "@types/fabric": "^3.0.0",
     "@types/jquery": "^3.3.30",
-    "bootstrap": "^4.3.1",
     "canvas": "^2.5.0",
     "fabric": "^3.2.0",
     "jquery": "^3.4.1"
@@ -20,6 +19,8 @@
   "devDependencies": {
     "@types/webpack": "^4.4.34",
     "copy-webpack-plugin": "^5.0.3",
+    "css-loader": "^3.0.0",
+    "style-loader": "^0.23.1",
     "ts-loader": "^6.0.4",
     "typescript": "^3.5.2",
     "webpack": "^4.35.0",
