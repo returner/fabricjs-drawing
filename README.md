@@ -6,3 +6,5 @@ copy c:\gtk\bin to node_modules/canvas/build/Release
 
 https://github.com/nodejs/node-gyp#on-windows
 
+jpeglib.h 에러가 나는경우에 아래 링크 참조
+https://github.com/Automattic/node-canvas/wiki/Installation:-Windows
