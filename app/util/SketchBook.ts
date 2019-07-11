@@ -6,6 +6,7 @@ import { Rectangle } from "../model/Rectangle";
 import { DrawCanvas } from "./DrawCanvas";
 import { Shapes } from "../model/Shapes";
 import { DrawingState } from "../model/DrawingState";
+import { DrawCanvasEvent } from "../model/DrawCanvasEvent";
 
 export class SketchBook {
     private shapes : Array<Shape> = [];
@@ -15,17 +16,16 @@ export class SketchBook {
         this.drawCanvas = new DrawCanvas(canvasElementId, this.drawingShpesState);
     }
 
-    drawingShpesState = (drawingState : DrawingState) => {
-        console.log(drawingState.message);
+    private drawingShpesState (drawCanvasEvent : DrawCanvasEvent) {
+        console.log(drawCanvasEvent.message);
+
+        // let shape : Shape = new Rectangle();
+        // this.shapes.push(shape);
     }
 
-    public drawRect(option : ShapeOption) {
-        let shape : Shape = new Rectangle(option);;
-
-        this.shapes.push(shape);
-        this.drawCanvas.createShape(shape);
-        
-    }
+    // public drawRect(option : ShapeOption) {
+    //     this.drawCanvas.createShape(shape);
+    // }
 
     public configureDrawing (shapes : Shapes){
         this.drawCanvas.configureMouseEvent(shapes);

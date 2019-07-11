@@ -5,39 +5,63 @@ import { Rectangle} from "../model/Rectangle";
 import { RectOption } from "../model/RectOption";
 import { Shapes } from "../model/Shapes";
 import { DrawingState } from "../model/DrawingState";
+import { DrawCanvasEvent } from "../model/DrawCanvasEvent";
+import { DrawObject } from "../model/DrawObject";
+import { ShapeOption } from "../interface/ShapeOption";
+import { MousePoint } from "../model/MousePoint";
 
 
-export class FabricRectOption implements fabric.IRectOptions {
-    
-}
 export class DrawCanvas {
 
+    private currentDrawingFabricObject : DrawObject = new DrawObject();
     private currentShapes : Shapes = Shapes.None;
     private isDrawing : boolean = false;
     private drawCanvas : fabric.Canvas;
     private sketchBookCallback : Function;
-    public executeSketchBookCallback = (drawingState : DrawingState) => {
-        this.sketchBookCallback(drawingState);
-    }
+    
     constructor(canvasElementId : string, sketchBookCallback : Function) {
         this.drawCanvas = new fabric.Canvas(canvasElementId);
         this.sketchBookCallback = sketchBookCallback;
     }
 
-    private getFabricObject (shape : Shape)  : fabric.Object {
-        if (shape instanceof Rectangle) {
-            console.log("shape is Rectangle")
+    private getFabricObject ( mousePoint : MousePoint)  : fabric.Object|null {
+        if (this.currentShapes == Shapes.None)
+            return null;
+
+        let shapeOption : ShapeOption;
+
+        switch(this.currentShapes) {
+            case Shapes.Rectangle:
+                shapeOption = new RectOption();
+                shapeOption.width = 1;
+                shapeOption.height = 1;
+                shapeOption.left = mousePoint.x;
+                shapeOption.top = mousePoint.y;
+                break;
+            default:
+                return null;
         }
 
-        return new fabric.Rect(shape.option);
+        return new fabric.Rect(shapeOption);
+    }
+
+    private getDrawCanvasPoint(e : Event) : MousePoint {
+        let pointer = this.drawCanvas.getPointer(e);
+        return new MousePoint(pointer.x, pointer.y);
     }
 
     private drawStart(event : fabric.IEvent) {
         if (this.currentShapes == Shapes.None || this.isDrawing)
             return;
+        
+        let fabricObject = this.getFabricObject(this.getDrawCanvasPoint(event.e));
+        if (fabricObject == null)
+            return;
+        
         this.isDrawing = true;
-        console.log("drawStart")
-        let drawingState = new DrawingState();
+        this.drawCanvas.add(fabricObject);
+
+        let drawingState = new DrawCanvasEvent();
         drawingState.message = "state:drawStart";
         this.sketchBookCallback(drawingState);
     }
@@ -46,7 +70,7 @@ export class DrawCanvas {
         if (this.currentShapes == Shapes.None || !this.isDrawing)
             return;
         console.log("drawMove")
-        let drawingState = new DrawingState();
+        let drawingState = new DrawCanvasEvent();
         drawingState.message = "state:drawMove";
         this.sketchBookCallback(drawingState);
     }
@@ -56,7 +80,7 @@ export class DrawCanvas {
             return;
         this.isDrawing = false;
         console.log("drawEnd")
-        let drawingState = new DrawingState();
+        let drawingState = new DrawCanvasEvent();
         drawingState.message = "state:drawEnd";
         this.sketchBookCallback(drawingState);
     }
@@ -72,11 +96,5 @@ export class DrawCanvas {
             this.drawCanvas.on("mouse:move", (e) => {this.drawMove(e)})
             this.drawCanvas.on("mouse:up", (e) => {this.drawEnd(e)})
         }
-    }
-
-    public createShape(shape : Shape) {
-        let fabricObject = this.getFabricObject(shape);
-        
-        this.drawCanvas.add(fabricObject);
     }
 }

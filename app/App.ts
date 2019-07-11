@@ -12,10 +12,10 @@ export class Main{
         this.sketchBook = new SketchBook(this.canvasElementId);
     }
 
-    public drawShape : Function = (shapes : Shapes) => {
-        let rectOption = new RectOption();
-        this.sketchBook.drawRect(rectOption);
-    };
+    // public drawShape : Function = (shapes : Shapes) => {
+    //     let rectOption = new RectOption();
+    //     this.sketchBook.drawRect(rectOption);
+    // };
 
     public configShape (shapes : Shapes) {
         this.sketchBook.configureDrawing(shapes);
