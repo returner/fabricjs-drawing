@@ -1,3 +1,4 @@
-export class DrawingState {
-    message : string = "";
+export enum DrawingState {
+    Start, End, Drawing, ObjectCreated
 }
+
