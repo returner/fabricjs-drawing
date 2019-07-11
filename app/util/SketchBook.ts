@@ -4,6 +4,7 @@ import { ShapeOption } from "../interface/ShapeOption";
 import { RectOption } from "../model/RectOption";
 import { Rectangle } from "../model/Rectangle";
 import { DrawCanvas } from "./DrawCanvas";
+import { Shapes } from "../model/Shapes";
 
 export class SketchBook {
     private shapes : Array<Shape> = [];
@@ -11,17 +12,13 @@ export class SketchBook {
 
     constructor(canvasElementId : string) {
         this.drawCanvas = new DrawCanvas(canvasElementId);
-        console.log(`create canvase : ${canvasElementId}`);
-    }
-    public add(shape : Shape) {
-        let rect = this.drawCanvas.createShape(shape);
-        this.shapes.push(shape);
-        console.log(shape)
     }
 
     public drawRect(option : ShapeOption) {
-        let rectOption = new RectOption();
-        let rect = new Rectangle(rectOption);
-        this.add(rect);
+        let shape : Shape = new Rectangle(option);;
+
+        this.shapes.push(shape);
+        this.drawCanvas.createShape(shape);
+        
     }
 }

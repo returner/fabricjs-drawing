@@ -11,15 +11,14 @@ export class Main{
     {
         this.canvasElementId = canvasElementId;
         this.sketchBook = new SketchBook(this.canvasElementId);
-
     }
+
     public drawShape : Function = (shapes : Shapes) => {
         this.currentShapes = Shapes.Rectangle;
         let rectOption = new RectOption();
         this.sketchBook.drawRect(rectOption);
     };
 }
-
 
 
 $(document).ready(()=>{
@@ -32,4 +31,3 @@ $(document).ready(()=>{
         main.drawShape(Shapes.Circle);
     });
 });
-

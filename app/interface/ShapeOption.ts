@@ -1,13 +1,8 @@
 import { Shapes } from "../model/Shapes";
+import { ShapeSize } from "../model/ShapeSize";
+import { ShapePosition } from "../model/ShapePosition";
+import { ShapeStroke } from "../model/ShapeStroke";
 
-export interface ShapeOption {
+export interface ShapeOption extends fabric.IRectOptions {
     shapes : Shapes;
-    width : number;
-    height : number;
-    left : number;
-    top : number;
-    fill : string;
-    angle : number;
-    strokeWidth : number;
-    stroke : string;
 }
