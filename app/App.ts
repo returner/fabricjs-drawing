@@ -5,7 +5,6 @@ import { Shapes } from "./model/Shapes";
 
 export class Main{
     private canvasElementId : string = "";
-    private currentShapes : Shapes = Shapes.None;
     private sketchBook : SketchBook;
     constructor(canvasElementId : string)
     {
@@ -14,20 +13,35 @@ export class Main{
     }
 
     public drawShape : Function = (shapes : Shapes) => {
-        this.currentShapes = Shapes.Rectangle;
         let rectOption = new RectOption();
         this.sketchBook.drawRect(rectOption);
     };
+
+    public configShape (shapes : Shapes) {
+        this.sketchBook.configureDrawing(shapes);
+    }
 }
 
+let main = new Main("canvas");
 
 $(document).ready(()=>{
-    let main = new Main("canvas");
 
+    $("#btnNone").on("click", () => {
+        main.configShape(Shapes.None);
+    });
     $("#btnRectangle").on("click", () => {
-        main.drawShape(Shapes.Rectangle);
+        main.configShape(Shapes.Rectangle);
     });
     $("#btnCircle").on("click", () => {
-        main.drawShape(Shapes.Circle);
+        main.configShape(Shapes.Circle);
+    });
+    $("#btnTriangle").on("click", () => {
+        main.configShape(Shapes.Triangle);
+    });
+    $("#btnLine").on("click", () => {
+        main.configShape(Shapes.Line);
+    });
+    $("#btnDraw").on("click", () => {
+        main.configShape(Shapes.Draw);
     });
 });

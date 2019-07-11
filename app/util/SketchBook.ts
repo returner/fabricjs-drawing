@@ -5,13 +5,18 @@ import { RectOption } from "../model/RectOption";
 import { Rectangle } from "../model/Rectangle";
 import { DrawCanvas } from "./DrawCanvas";
 import { Shapes } from "../model/Shapes";
+import { DrawingState } from "../model/DrawingState";
 
 export class SketchBook {
     private shapes : Array<Shape> = [];
     private drawCanvas : DrawCanvas;
 
     constructor(canvasElementId : string) {
-        this.drawCanvas = new DrawCanvas(canvasElementId);
+        this.drawCanvas = new DrawCanvas(canvasElementId, this.drawingShpesState);
+    }
+
+    drawingShpesState = (drawingState : DrawingState) => {
+        console.log(drawingState.message);
     }
 
     public drawRect(option : ShapeOption) {
@@ -20,5 +25,9 @@ export class SketchBook {
         this.shapes.push(shape);
         this.drawCanvas.createShape(shape);
         
+    }
+
+    public configureDrawing (shapes : Shapes){
+        this.drawCanvas.configureMouseEvent(shapes);
     }
 }
