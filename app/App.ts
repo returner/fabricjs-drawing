@@ -1,7 +1,7 @@
 import * as $ from "jquery";
 import { RectOption } from "./model/RectOption";
 import { SketchBook } from "./util/SketchBook";
-import { Shapes } from "./model/Shapes";
+import { ShapeType } from "./model/ShapeType";
 
 export class Main{
     private canvasElementId : string = "";
@@ -17,8 +17,8 @@ export class Main{
     //     this.sketchBook.drawRect(rectOption);
     // };
 
-    public configShape (shapes : Shapes) {
-        this.sketchBook.configureDrawing(shapes);
+    public configShape (shapeType : ShapeType) {
+        this.sketchBook.configureDrawing(shapeType);
     }
 }
 
@@ -27,21 +27,21 @@ let main = new Main("canvas");
 $(document).ready(()=>{
 
     $("#btnNone").on("click", () => {
-        main.configShape(Shapes.None);
+        main.configShape(ShapeType.None);
     });
     $("#btnRectangle").on("click", () => {
-        main.configShape(Shapes.Rectangle);
+        main.configShape(ShapeType.Rectangle);
     });
     $("#btnCircle").on("click", () => {
-        main.configShape(Shapes.Circle);
+        main.configShape(ShapeType.Circle);
     });
     $("#btnTriangle").on("click", () => {
-        main.configShape(Shapes.Triangle);
+        main.configShape(ShapeType.Triangle);
     });
     $("#btnLine").on("click", () => {
-        main.configShape(Shapes.Line);
+        main.configShape(ShapeType.Line);
     });
     $("#btnDraw").on("click", () => {
-        main.configShape(Shapes.Draw);
+        main.configShape(ShapeType.Draw);
     });
 });

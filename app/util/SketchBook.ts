@@ -4,7 +4,7 @@ import { ShapeOption } from "../interface/ShapeOption";
 import { RectOption } from "../model/RectOption";
 import { Rectangle } from "../model/Rectangle";
 import { DrawCanvas } from "./DrawCanvas";
-import { Shapes } from "../model/Shapes";
+import { ShapeType } from "../model/ShapeType";
 import { DrawingState } from "../model/DrawingState";
 import { DrawCanvasEvent } from "../model/DrawCanvasEvent";
 
@@ -27,7 +27,7 @@ export class SketchBook {
     //     this.drawCanvas.createShape(shape);
     // }
 
-    public configureDrawing (shapes : Shapes){
-        this.drawCanvas.configureMouseEvent(shapes);
+    public configureDrawing (shapeType : ShapeType){
+        this.drawCanvas.configureMouseEvent(shapeType);
     }
 }
