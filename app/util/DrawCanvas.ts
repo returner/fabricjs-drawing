@@ -12,7 +12,6 @@ import { MousePoint } from "../model/MousePoint";
 
 
 export class DrawCanvas {
-
     private currentDrawingFabricObject : DrawObject = new DrawObject();
     private currentShapes : ShapeType = ShapeType.None;
     private isDrawing : boolean = false;
@@ -52,6 +51,11 @@ export class DrawCanvas {
 
     private drawStart(event : fabric.IEvent) {
         console.log(event);
+        if (this.currentShapes == ShapeType.None)
+        {
+            let fabricObject = this.getFabricObject(this.getDrawCanvasPoint(event.e));
+            console.log(fabricObject)    ;
+        }
         if (this.currentShapes == ShapeType.None || this.isDrawing)
             return;
         
@@ -72,6 +76,12 @@ export class DrawCanvas {
         if (this.currentShapes == ShapeType.None || !this.isDrawing)
             return;
         console.log("drawMove")
+        let currentPoint = this.getDrawCanvasPoint(event.e);
+        console.log(`currentPoint (${currentPoint.x} , ${currentPoint.y}) / fabricObjectPoint ( ${this.currentDrawingFabricObject.FabricObject.left},${this.currentDrawingFabricObject.FabricObject.top})`)
+        this.currentDrawingFabricObject.FabricObject.width = currentPoint.x - (this.currentDrawingFabricObject.FabricObject.left as number);
+        this.currentDrawingFabricObject.FabricObject.height = currentPoint.y - (this.currentDrawingFabricObject.FabricObject.top as number);
+        this.drawCanvas.renderAll();
+        this.drawCanvas.calcOffset();
         let drawingState = new DrawCanvasEvent();
         drawingState.message = "state:drawMove";
         this.sketchBookCallback(drawingState);
@@ -81,10 +91,7 @@ export class DrawCanvas {
         if (this.currentShapes == ShapeType.None || !this.isDrawing)
             return;
         this.isDrawing = false;
-        let currentPoint = this.getDrawCanvasPoint(event.e);
-        this.currentDrawingFabricObject.FabricObject.width = this.currentDrawingFabricObject.FabricObject.width as number + currentPoint.x;
-        this.currentDrawingFabricObject.FabricObject.height = this.currentDrawingFabricObject.FabricObject.height as number + currentPoint.y;
-        this.drawCanvas.renderAll();
+        this.currentDrawingFabricObject.FabricObject.setCoords();
         let drawingState = new DrawCanvasEvent();
         drawingState.message = "state:drawEnd";
         this.sketchBookCallback(drawingState);
@@ -94,7 +101,7 @@ export class DrawCanvas {
         this.currentShapes = shapeType;
         if (this.currentShapes == ShapeType.None) {
             this.drawCanvas.off("mouse:down", (e) => {this.drawStart(e)});
-            this.drawCanvas.on("mouse:move", (e) => {this.drawMove(e)});
+            this.drawCanvas.off("mouse:move", (e) => {this.drawMove(e)});
             this.drawCanvas.off("mouse:up", (e) => {this.drawEnd(e)});
         } else {
             this.drawCanvas.on("mouse:down", (e) => {this.drawStart(e)})

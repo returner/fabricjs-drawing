@@ -1,5 +1,4 @@
 import * as $ from "jquery";
-import { RectOption } from "./model/RectOption";
 import { SketchBook } from "./util/SketchBook";
 import { ShapeType } from "./model/ShapeType";
 
