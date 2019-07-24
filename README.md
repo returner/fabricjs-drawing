@@ -1,4 +1,8 @@
-# fabricjs-jquery-bootstrap
+# Sketchbook
+Create shapes and free drawing tool.
+powered by fabricjs
+https://returner.github.io/sketchbook/
+
 
 ## node-gyp error
 https://github.com/benjamind/delarre.docpad/blob/master/src/documents/posts/installing-node-canvas-for-windows.html.md

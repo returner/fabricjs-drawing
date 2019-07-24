@@ -28,6 +28,7 @@ export class SketchBook {
     // }
 
     public configureDrawing (shapeType : ShapeType){
+        console.log(shapeType);
         this.drawCanvas.configureMouseEvent(shapeType);
     }
 }
