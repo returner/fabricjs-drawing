@@ -11,11 +11,6 @@ export class Main{
         this.sketchBook = new SketchBook(this.canvasElementId);
     }
 
-    // public drawShape : Function = (shapes : Shapes) => {
-    //     let rectOption = new RectOption();
-    //     this.sketchBook.drawRect(rectOption);
-    // };
-
     public configShape (shapeType : ShapeType) {
         this.sketchBook.configureDrawing(shapeType);
     }
