@@ -1,10 +1,10 @@
-import { ShapeOption } from "../interface/ShapeOption";
-import { ShapeType } from "./ShapeType";
-import { ShapePosition } from "./ShapePosition";
-import { ShapeSize } from "./ShapeSize";
-import { ShapeStroke } from "./ShapeStroke";
+import { ShapeOption } from "../../interface/ShapeOption";
+import { ShapeType } from "../ShapeType";
+import { ShapePosition } from "../ShapePosition";
+import { ShapeSize } from "../ShapeSize";
+import { ShapeStroke } from "../ShapeStroke";
 
-export class RectOption implements ShapeOption {
+export class RectOptions implements ShapeOption, fabric.IRectOptions {
     shapeType: ShapeType;
     rx?: number | undefined;
     ry?: number | undefined;

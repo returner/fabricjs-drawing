@@ -1,14 +1,12 @@
 
 import {fabric} from "fabric";
-import { Shape } from "../interface/Shape";
-import { Rectangle} from "../model/Rectangle";
-import { RectOption } from "../model/RectOption";
+import { RectOptions } from "../model/ShapeOptions/RectOptions";
 import { ShapeType } from "../model/ShapeType";
-import { DrawingState } from "../model/DrawingState";
 import { DrawCanvasEvent } from "../model/DrawCanvasEvent";
 import { DrawObject } from "../model/DrawObject";
 import { ShapeOption } from "../interface/ShapeOption";
 import { MousePoint } from "../model/MousePoint";
+import { CircleOptions } from "../model/ShapeOptions/CircleOptions";
 
 
 export class DrawCanvas {
@@ -27,21 +25,25 @@ export class DrawCanvas {
         if (this.currentShapes == ShapeType.None)
             return null;
 
-        let shapeOption : ShapeOption;
-
         switch(this.currentShapes) {
             case ShapeType.Rectangle:
-                shapeOption = new RectOption();
-                shapeOption.width = 1;
-                shapeOption.height = 1;
-                shapeOption.left = mousePoint.x;
-                shapeOption.top = mousePoint.y;
-                break;
+                let rectOptions = new RectOptions();
+                rectOptions.width = 1;
+                rectOptions.height = 1;
+                rectOptions.left = mousePoint.x;
+                rectOptions.top = mousePoint.y;
+                return new fabric.Rect(rectOptions);
+            case ShapeType.Circle:
+                let circleOptions = new CircleOptions();
+                circleOptions.radius = 0;
+                circleOptions.left = mousePoint.x;
+                circleOptions.top = mousePoint.y;
+                return new fabric.Circle(circleOptions);
             default:
                 return null;
         }
 
-        return new fabric.Rect(shapeOption);
+        return null;
     }
 
     private getDrawCanvasPoint(e : Event) : MousePoint {
@@ -94,7 +96,13 @@ export class DrawCanvas {
         let drawingWidth = currentPoint.x - (this.currentDrawingFabricObject.FabricObject.left as number);
         let drawingHeight = currentPoint.y - (this.currentDrawingFabricObject.FabricObject.top as number);
         console.log(`drawingWidth:${drawingWidth} / drawingHeight:${drawingHeight}`);
-        this.currentDrawingFabricObject.FabricObject.set("width", drawingWidth).set("height", drawingHeight);
+        if (this.currentShapes == ShapeType.Circle) {
+            //this.currentDrawingFabricObject.FabricObject.set("radius", );
+            (this.currentDrawingFabricObject.FabricObject as fabric.Circle).setRadius(drawingWidth > drawingHeight ? drawingWidth : drawingHeight);
+        } else {
+            this.currentDrawingFabricObject.FabricObject.set("width", drawingWidth).set("height", drawingHeight);
+        }
+        
         
         this.drawCanvas.renderAll();
         let drawingState = new DrawCanvasEvent();
