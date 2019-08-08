@@ -3,6 +3,6 @@ import { ShapeSize } from "../model/ShapeSize";
 import { ShapePosition } from "../model/ShapePosition";
 import { ShapeStroke } from "../model/ShapeStroke";
 
-export interface ShapeOption extends fabric.IRectOptions {
+export interface ShapeOption extends fabric.IObjectOptions {
     shapeType : ShapeType;
 }
