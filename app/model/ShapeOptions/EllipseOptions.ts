@@ -1,11 +1,10 @@
 import { ShapeOption } from "../../interface/ShapeOption";
 import { ShapeType } from "../ShapeType";
 
-export class CircleOptions implements ShapeOption, fabric.ICircleOptions {
+
+export class CircleOptions implements ShapeOption, fabric.IEllipseOptions {
     shapeType: ShapeType;
-    radius?: number | undefined;
-    startAngle?: number | undefined;
-    endAngle?: number | undefined;
+    rx?: number | undefined;    ry?: number | undefined;
     type?: string | undefined;
     originX?: string | undefined;
     originY?: string | undefined;
@@ -92,10 +91,9 @@ export class CircleOptions implements ShapeOption, fabric.ICircleOptions {
     snapThreshold?: number | null | undefined;
     group?: import("fabric/fabric-impl").Group | undefined;
     canvas?: import("fabric/fabric-impl").Canvas | undefined;
-    
 
     constructor () {
-        this.shapeType = ShapeType.Circle;
+        this.shapeType = ShapeType.Ellipse;
         this.fill = "transparent";
         this.stroke = "black";
         this.strokeWidth = 1;

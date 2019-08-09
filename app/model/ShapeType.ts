@@ -1,3 +1,3 @@
 export enum ShapeType {
-    Rectangle, Circle, Triangle, Line, Draw, None
+    Rectangle, Circle, Ellipse, Triangle, Line, Draw, None
 }

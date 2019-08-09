@@ -39,6 +39,12 @@ export class DrawCanvas {
                 circleOptions.left = mousePoint.x;
                 circleOptions.top = mousePoint.y;
                 return new fabric.Circle(circleOptions);
+            case ShapeType.Ellipse:
+                let ellipseOptions = new CircleOptions();
+                ellipseOptions.radius = 0;
+                ellipseOptions.left = mousePoint.x;
+                ellipseOptions.top = mousePoint.y;
+                return new fabric.Ellipse(ellipseOptions);
             default:
                 return null;
         }
@@ -96,14 +102,20 @@ export class DrawCanvas {
         let drawingWidth = currentPoint.x - (this.currentDrawingFabricObject.FabricObject.left as number);
         let drawingHeight = currentPoint.y - (this.currentDrawingFabricObject.FabricObject.top as number);
         console.log(`drawingWidth:${drawingWidth} / drawingHeight:${drawingHeight}`);
-        if (this.currentShapes == ShapeType.Circle) {
-            //this.currentDrawingFabricObject.FabricObject.set("radius", );
-            (this.currentDrawingFabricObject.FabricObject as fabric.Circle).setRadius(drawingWidth > drawingHeight ? drawingWidth : drawingHeight);
-        } else {
-            this.currentDrawingFabricObject.FabricObject.set("width", drawingWidth).set("height", drawingHeight);
+        switch(this.currentShapes)
+        {
+            case ShapeType.Circle:
+                (this.currentDrawingFabricObject.FabricObject as fabric.Circle).setRadius(drawingWidth > drawingHeight ? drawingWidth : drawingHeight);
+                break;
+            case ShapeType.Ellipse:
+                (this.currentDrawingFabricObject.FabricObject as fabric.Ellipse).set("rx",drawingWidth);
+                (this.currentDrawingFabricObject.FabricObject as fabric.Ellipse).set("ry",drawingHeight)
+                break;
+            default:
+                this.currentDrawingFabricObject.FabricObject.set("width", drawingWidth).set("height", drawingHeight);
+                break;
         }
-        
-        
+         
         this.drawCanvas.renderAll();
         let drawingState = new DrawCanvasEvent();
         drawingState.message = "state:drawMove";
@@ -132,5 +144,11 @@ export class DrawCanvas {
             this.drawCanvas.on("mouse:move", (e) => {this.drawMove(e)})
             this.drawCanvas.on("mouse:up", (e) => {this.drawEnd(e)})
         }
+    }
+
+    public exportToJson() : string {
+        let json = this.drawCanvas.toJSON().toString();
+
+        return json;
     }
 }

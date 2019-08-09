@@ -20,4 +20,11 @@ export class SketchBook {
         console.log(shapeType);
         this.drawCanvas.configureMouseEvent(shapeType);
     }
+
+    public exportJson() : string {
+        let json = this.drawCanvas.exportToJson();
+        console.log(json);
+
+        return json;
+    }
 }
