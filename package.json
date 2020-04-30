@@ -14,7 +14,7 @@
     "@types/jquery": "^3.3.31",
     "canvas": "^2.5.0",
     "fabric": "^3.3.2",
-    "jquery": "^3.4.1"
+    "jquery": "^3.5.0"
   },
   "devDependencies": {
     "@types/webpack": "^4.32.1",
