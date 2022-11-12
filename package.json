@@ -23,7 +23,7 @@
     "typescript": "^3.5.2",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.39.1",
-    "webpack-cli": "^3.3.6",
+    "webpack-cli": "^3.3.12",
     "webpack-copy-plugin": "0.0.4",
     "webpack-dev-server": "^3.7.2"
   }
